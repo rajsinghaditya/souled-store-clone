@@ -12,6 +12,19 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
   // cartItems is an Array of objects: { ...product, selectedSize, quantity }
   const [cartItems, setCartItems] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+
+  // TOGGLE WISHLIST
+  function toggleWishlist(product) {
+    setWishlist(prev =>
+      prev.find(p => p.id === product.id)
+        ? prev.filter(p => p.id !== product.id)
+        : [...prev, product]
+    );
+  }
+
+  // CHECK IF WISHLISTED
+  const isWishlisted = (id) => wishlist.some(p => p.id === id);
 
   // ADD ITEM TO CART
   // Uses .findIndex (array method) to check if item already exists
@@ -83,6 +96,9 @@ export function CartProvider({ children }) {
         clearCart,
         totalItems,
         totalPrice,
+        wishlist,
+        toggleWishlist,
+        isWishlisted,
       }}
     >
       {children}

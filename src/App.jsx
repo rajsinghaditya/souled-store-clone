@@ -9,20 +9,28 @@ import HeroBanner from "./components/HeroBanner";
 import ProductGrid from "./components/ProductGrid";
 import CartDrawer from "./components/CartDrawer";
 import Footer from "./components/Footer";
+import WishlistPage from "./pages/WishlistPage";
 import "./App.css";
 
 function App() {
   // State: is the cart drawer open or closed?
   const [cartOpen, setCartOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState("home");
 
   return (
     // Wrap entire app with CartProvider so all components can access cart
     <CartProvider>
       <div className="app">
-        <Navbar onCartOpen={() => setCartOpen(true)} />
+        <Navbar onCartOpen={() => setCartOpen(true)} onNavigate={setCurrentPage} />
         <main className="main-content">
-          <HeroBanner />
-          <ProductGrid />
+          {currentPage === "home" ? (
+            <>
+              <HeroBanner />
+              <ProductGrid />
+            </>
+          ) : (
+            <WishlistPage onNavigate={setCurrentPage} />
+          )}
         </main>
         <Footer />
         <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />

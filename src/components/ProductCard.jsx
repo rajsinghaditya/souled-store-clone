@@ -8,9 +8,10 @@ import "../styles/ProductCard.css";
 
 function ProductCard({ product }) {
   const [selectedSize, setSelectedSize] = useState("");
-  const [wishlisted, setWishlisted] = useState(false);
   const [added, setAdded] = useState(false);
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, toggleWishlist, isWishlisted } = useContext(CartContext);
+  
+  const wishlisted = isWishlisted(product.id);
 
   // Calculate discount percentage using Math
   const discount = Math.round(
@@ -74,7 +75,7 @@ function ProductCard({ product }) {
         <button
           className={`wishlist-btn ${wishlisted ? "wishlisted" : ""}`}
           id={`wishlist-${product.id}`}
-          onClick={() => setWishlisted(!wishlisted)}
+          onClick={() => toggleWishlist(product)}
           title="Add to Wishlist"
         >
           {wishlisted ? "❤️" : "🤍"}

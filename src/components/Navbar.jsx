@@ -6,9 +6,9 @@ import React, { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import "../styles/Navbar.css";
 
-function Navbar({ onCartOpen }) {
+function Navbar({ onCartOpen, onNavigate }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { totalItems } = useContext(CartContext);
+  const { totalItems, wishlist } = useContext(CartContext);
 
   // Navbar links — array of objects, rendered with .map
   const navLinks = [
@@ -34,7 +34,7 @@ function Navbar({ onCartOpen }) {
       {/* Main navbar */}
       <nav className="navbar-main">
         {/* Logo */}
-        <div className="navbar-logo">
+        <div className="navbar-logo" onClick={() => onNavigate('home')} style={{cursor: 'pointer'}}>
           <span className="logo-icon">S</span>
           <span className="logo-text">The Souled Store</span>
         </div>
@@ -52,9 +52,12 @@ function Navbar({ onCartOpen }) {
 
         {/* Right actions */}
         <div className="navbar-actions">
-          <button className="action-btn" id="wishlist-btn" title="Wishlist">
+          <button className="action-btn" id="wishlist-btn" title="Wishlist" onClick={() => onNavigate('wishlist')}>
             <span>🤍</span>
             <span className="action-label">Wishlist</span>
+            {wishlist.length > 0 && (
+              <span className="cart-badge">{wishlist.length}</span>
+            )}
           </button>
           <button className="action-btn" id="account-btn" title="Account">
             <span>👤</span>

@@ -1,0 +1,157 @@
+/* HeroBanner.css */
+
+.hero-section {
+  padding: 0;
+}
+
+.hero-banner {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  padding: 60px 80px;
+  transition: background 0.8s ease;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 500px;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 28px;
+  font-weight: 400;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: #111;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  transition: all var(--transition);
+  letter-spacing: 0.3px;
+}
+.hero-cta:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Decorative art */
+.hero-art {
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.art-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.15);
+}
+.art-circle-1 {
+  width: 200px; height: 200px;
+  top: -100px; right: -100px;
+  background: rgba(255,255,255,0.05);
+}
+.art-circle-2 {
+  width: 300px; height: 300px;
+  top: -50px; right: -150px;
+}
+.art-circle-3 {
+  width: 150px; height: 150px;
+  bottom: -40px; right: 20px;
+  background: rgba(255,255,255,0.03);
+}
+.art-logo {
+  position: relative;
+  font-size: 80px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.12);
+  letter-spacing: -4px;
+}
+
+/* Dots */
+.hero-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background: var(--color-surface);
+}
+.hero-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--color-border);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.hero-dot.active {
+  background: var(--color-primary);
+  width: 24px;
+  border-radius: var(--radius-full);
+}
+
+/* Trust badges */
+.trust-badges {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+.trust-badge span:first-child {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    padding: 40px 24px;
+    min-height: 280px;
+  }
+  .hero-art { display: none; }
+}

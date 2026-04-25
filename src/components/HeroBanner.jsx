@@ -38,7 +38,7 @@ function HeroBanner({ onNavigate }) {
           <button 
             className="hero-cta" 
             id="hero-cta-btn"
-            onClick={() => onNavigate('men')}
+            onClick={() => onNavigate(currentBanner.target)}
           >
             {currentBanner.cta} →
           </button>

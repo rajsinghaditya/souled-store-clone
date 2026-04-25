@@ -29,10 +29,9 @@ function Footer() {
     {
       title: "Shop",
       links: [
-        { label: "Men",   href: "#" },
-        { label: "Women", href: "#" },
-        { label: "Kids",  href: "#" },
-        { label: "Sale",  href: "#" },
+        { label: "Men",      href: "#" },
+        { label: "Women",    href: "#" },
+        { label: "Sneakers", href: "#" },
       ],
     },
   ];

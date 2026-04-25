@@ -10,30 +10,49 @@ import ProductGrid from "./components/ProductGrid";
 import CartDrawer from "./components/CartDrawer";
 import Footer from "./components/Footer";
 import WishlistPage from "./pages/WishlistPage";
+import ProductDetail from "./components/ProductDetail";
 import "./App.css";
 
 function App() {
-  // State: is the cart drawer open or closed?
+  // State: current page or category
   const [cartOpen, setCartOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState("home"); // home, wishlist, men, women, sneakers
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  // Helper to determine if we are on a category page
+  const isCategoryPage = ["men", "women", "sneakers"].includes(currentPage);
 
   return (
     // Wrap entire app with CartProvider so all components can access cart
     <CartProvider>
       <div className="app">
-        <Navbar onCartOpen={() => setCartOpen(true)} onNavigate={setCurrentPage} />
+        <Navbar onCartOpen={() => setCartOpen(true)} onNavigate={setCurrentPage} activePage={currentPage} />
         <main className="main-content">
           {currentPage === "home" ? (
             <>
-              <HeroBanner />
-              <ProductGrid />
+              <HeroBanner onNavigate={setCurrentPage} />
+              <ProductGrid onProductClick={setSelectedProduct} />
             </>
+          ) : currentPage === "wishlist" ? (
+            <WishlistPage
+              onNavigate={setCurrentPage}
+              onProductClick={setSelectedProduct}
+            />
           ) : (
-            <WishlistPage onNavigate={setCurrentPage} />
+            <ProductGrid 
+              key={currentPage} // Force re-mount on page change
+              categoryFilter={currentPage} 
+              onProductClick={setSelectedProduct} 
+            />
           )}
         </main>
         <Footer />
         <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+        <ProductDetail
+          product={selectedProduct}
+          isOpen={!!selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
       </div>
     </CartProvider>
   );

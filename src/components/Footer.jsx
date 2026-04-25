@@ -57,6 +57,15 @@ function Footer() {
             India's #1 Officially Licensed Fan Merchandise Store.
             Find your fandom, wear your passion.
           </p>
+          <div className="footer-newsletter">
+            <h4 className="footer-section-title">Stay in the Loop 🚀</h4>
+            <p className="newsletter-text">Get the latest fandom news and exclusive deals.</p>
+            <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+              <input type="email" placeholder="Email address" className="newsletter-input" />
+              <button type="submit" className="newsletter-btn">Join</button>
+            </form>
+          </div>
+
           {/* Social — .map over socialLinks */}
           <div className="footer-social">
             {socialLinks.map((s) => (

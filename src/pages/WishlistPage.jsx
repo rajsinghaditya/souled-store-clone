@@ -3,7 +3,7 @@ import { CartContext } from "../context/CartContext";
 import ProductCard from "../components/ProductCard";
 import "../styles/WishlistPage.css";
 
-function WishlistPage({ onNavigate }) {
+function WishlistPage({ onNavigate, onProductClick }) {
   const { wishlist } = useContext(CartContext);
 
   return (
@@ -25,7 +25,11 @@ function WishlistPage({ onNavigate }) {
       ) : (
         <div className="products-grid">
           {wishlist.map(product => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onClick={() => onProductClick(product)}
+            />
           ))}
         </div>
       )}

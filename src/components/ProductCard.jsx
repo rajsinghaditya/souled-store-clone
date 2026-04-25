@@ -6,7 +6,7 @@ import React, { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import "../styles/ProductCard.css";
 
-function ProductCard({ product }) {
+function ProductCard({ product, onClick }) {
   const [selectedSize, setSelectedSize] = useState("");
   const [added, setAdded] = useState(false);
   const { addToCart, toggleWishlist, isWishlisted } = useContext(CartContext);
@@ -45,12 +45,16 @@ function ProductCard({ product }) {
   return (
     <div className={`product-card ${!product.inStock ? "out-of-stock" : ""}`} id={`product-${product.id}`}>
       {/* Image */}
-      <div className="card-image-wrap">
+      <div className="card-image-wrap" onClick={onClick} style={{ cursor: 'pointer' }}>
         <img
           src={product.image}
           alt={product.name}
           className="card-image"
           loading="lazy"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&q=80&auto=format&fit=crop";
+          }}
         />
 
         {/* Badges */}
@@ -75,7 +79,10 @@ function ProductCard({ product }) {
         <button
           className={`wishlist-btn ${wishlisted ? "wishlisted" : ""}`}
           id={`wishlist-${product.id}`}
-          onClick={() => toggleWishlist(product)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWishlist(product);
+          }}
           title="Add to Wishlist"
         >
           {wishlisted ? "❤️" : "🤍"}
@@ -85,7 +92,7 @@ function ProductCard({ product }) {
       {/* Card info */}
       <div className="card-info">
         <p className="card-fandom">{product.fandom}</p>
-        <h3 className="card-name">{product.name}</h3>
+        <h3 className="card-name" onClick={onClick} style={{ cursor: 'pointer' }}>{product.name}</h3>
 
         {/* Rating */}
         <div className="card-rating">

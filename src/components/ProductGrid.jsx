@@ -2,93 +2,119 @@
 // ProductGrid.jsx
 // Concepts: useState (filters, sort, search), useEffect (filtered products)
 //           .filter, .sort, .map on arrays of objects
+//           Pagination (visibleCount)
 // =====================================================
 import React, { useState, useEffect } from "react";
-import products, { categories, fandoms, sortOptions } from "../data/products";
+import { categories, fandoms, sortOptions } from "../data/products";
 import ProductCard from "./ProductCard";
 import "../styles/ProductGrid.css";
 
-function ProductGrid() {
+function ProductGrid({ onProductClick, categoryFilter }) {
   // State variables
+  const [products, setProducts]             = useState([]);
+  const [loading, setLoading]               = useState(true);
+  
+  // Initialize filters
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedFandom, setSelectedFandom]     = useState("all");
+  const [selectedFandom, setSelectedFandom]     = useState(() => {
+    if (categoryFilter === "marvel") return "Marvel";
+    if (categoryFilter === "dc")     return "DC Comics";
+    if (categoryFilter === "anime")  return "Anime";
+    return "all";
+  });
+  
+  const [selectedGender, setSelectedGender] = useState(() => {
+    if (["men", "women", "sneakers"].includes(categoryFilter)) return categoryFilter;
+    return "all";
+  });
+
   const [selectedSort, setSelectedSort]         = useState("default");
   const [searchQuery, setSearchQuery]           = useState("");
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [showInStockOnly, setShowInStockOnly]   = useState(false);
+  
+  // Pagination State
+  const [visibleCount, setVisibleCount]         = useState(24);
 
-  // =====================================================
-  // useEffect: Re-filter & re-sort whenever filters change
-  // =====================================================
+  // Fetch products on mount
   useEffect(() => {
-    // STEP 1: FILTER using .filter (array method)
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/products.json");
+        const data = await response.json();
+        setProducts(data);
+        setFilteredProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  // Filter & Sort logic
+  useEffect(() => {
+    if (products.length === 0) return;
+
     let result = products.filter((product) => {
-      // Filter by category
-      const categoryMatch =
-        selectedCategory === "all" || product.category === selectedCategory;
-
-      // Filter by fandom
-      const fandomMatch =
-        selectedFandom === "all" || product.fandom === selectedFandom;
-
-      // Filter by search query (searches name + fandom)
-      const searchMatch =
-        searchQuery === "" ||
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.fandom.toLowerCase().includes(searchQuery.toLowerCase());
-
-      // Filter by in-stock toggle
+      const categoryMatch = selectedCategory === "all" || product.category === selectedCategory;
+      const fandomMatch = selectedFandom === "all" || product.fandom === selectedFandom;
+      const genderMatch = selectedGender === "all" || product.gender === selectedGender;
+      const searchMatch = searchQuery === "" || 
+                         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         product.fandom.toLowerCase().includes(searchQuery.toLowerCase());
       const stockMatch = !showInStockOnly || product.inStock;
-
-      // All conditions must be true
-      return categoryMatch && fandomMatch && searchMatch && stockMatch;
+      return categoryMatch && fandomMatch && genderMatch && searchMatch && stockMatch;
     });
 
-    // STEP 2: SORT using .sort (array method)
     result = result.sort((a, b) => {
       switch (selectedSort) {
-        case "price-low":
-          return a.price - b.price;          // Ascending price
-        case "price-high":
-          return b.price - a.price;          // Descending price
-        case "rating":
-          return b.rating - a.rating;        // Highest rating first
-        case "newest":
-          return b.isNew - a.isNew;          // New items first
-        default:
-          return a.id - b.id;               // Default order
+        case "price-low": return a.price - b.price;
+        case "price-high": return b.price - a.price;
+        case "rating": return b.rating - a.rating;
+        case "newest": return b.id - a.id;
+        default: return a.id - b.id;
       }
     });
 
     setFilteredProducts(result);
-  }, [selectedCategory, selectedFandom, selectedSort, searchQuery, showInStockOnly]);
-  // ^ Dependency array — useEffect runs when any of these change
+    // Reset visible count when filters change to show top results
+    setVisibleCount(24);
+  }, [products, selectedCategory, selectedFandom, selectedGender, selectedSort, searchQuery, showInStockOnly]);
 
-  // Reset all filters
   function resetFilters() {
     setSelectedCategory("all");
     setSelectedFandom("all");
+    setSelectedGender("all");
     setSelectedSort("default");
     setSearchQuery("");
     setShowInStockOnly(false);
   }
 
+  const getPageTitle = () => {
+    if (!categoryFilter || categoryFilter === "home") return "Shop All Products";
+    const title = categoryFilter.charAt(0).toUpperCase() + categoryFilter.slice(1);
+    return `Shop ${title}'s Collection`;
+  };
+
+  const handleLoadMore = () => setVisibleCount(prev => prev + 24);
+
   return (
     <section className="product-section" id="products-section">
       <div className="container">
-        <h2 className="section-title">
-          Shop All Products
-          <span className="product-count">{filteredProducts.length} items</span>
-        </h2>
+        <div className="section-header">
+          <h2 className="section-title">{getPageTitle()}</h2>
+          <span className="product-count">{filteredProducts.length} unique items</span>
+        </div>
 
         {/* ===== FILTERS BAR ===== */}
         <div className="filters-bar">
-          {/* Search */}
           <div className="filter-search">
             <span>🔍</span>
             <input
               type="text"
-              id="product-search"
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -96,14 +122,12 @@ function ProductGrid() {
             />
           </div>
 
-          {/* Category Filter — .map over categories array of objects */}
           <div className="filter-group">
             <label className="filter-label">Category</label>
             <div className="filter-chips">
               {categories.map((cat) => (
                 <button
                   key={cat.id}
-                  id={`cat-filter-${cat.id}`}
                   className={`filter-chip ${selectedCategory === cat.id ? "chip-active" : ""}`}
                   onClick={() => setSelectedCategory(cat.id)}
                 >
@@ -113,80 +137,63 @@ function ProductGrid() {
             </div>
           </div>
 
-          {/* Fandom Filter — .map over fandoms array */}
           <div className="filter-group">
             <label className="filter-label">Fandom</label>
             <select
-              id="fandom-select"
               value={selectedFandom}
               onChange={(e) => setSelectedFandom(e.target.value)}
               className="filter-select"
             >
-              {fandoms.map((fandom) => (
-                <option key={fandom.id} value={fandom.id}>
-                  {fandom.label}
-                </option>
+              {fandoms.map((f) => (
+                <option key={f.id} value={f.id}>{f.label}</option>
               ))}
             </select>
           </div>
 
-          {/* Sort — .map over sortOptions */}
           <div className="filter-group">
-            <label className="filter-label">Sort By</label>
+            <label className="filter-label">Sort</label>
             <select
-              id="sort-select"
               value={selectedSort}
               onChange={(e) => setSelectedSort(e.target.value)}
               className="filter-select"
             >
               {sortOptions.map((opt) => (
-                <option key={opt.id} value={opt.id}>
-                  {opt.label}
-                </option>
+                <option key={opt.id} value={opt.id}>{opt.label}</option>
               ))}
             </select>
           </div>
 
-          {/* In-stock toggle */}
-          <div className="filter-group filter-toggle">
-            <label className="toggle-label" htmlFor="stock-toggle">
-              In Stock Only
-            </label>
-            <input
-              type="checkbox"
-              id="stock-toggle"
-              checked={showInStockOnly}
-              onChange={(e) => setShowInStockOnly(e.target.checked)}
-              className="toggle-checkbox"
-            />
-          </div>
-
-          {/* Reset */}
-          <button
-            className="reset-btn"
-            id="reset-filters-btn"
-            onClick={resetFilters}
-          >
-            Reset Filters
-          </button>
+          <button className="reset-btn" onClick={resetFilters}>Reset</button>
         </div>
 
-        {/* ===== PRODUCT GRID — .map over filteredProducts ===== */}
-        {filteredProducts.length === 0 ? (
-          <div className="no-products">
-            <p className="no-products-emoji">😕</p>
-            <h3>No products found</h3>
-            <p>Try adjusting your filters or search query</p>
-            <button className="reset-btn" onClick={resetFilters}>
-              Clear Filters
-            </button>
-          </div>
+        {/* ===== GRID ===== */}
+        {loading ? (
+          <div className="loading-container"><div className="loading-spinner"></div></div>
+        ) : filteredProducts.length === 0 ? (
+          <div className="no-products"><h3>No products found 😕</h3></div>
         ) : (
-          <div className="products-grid">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <>
+            <div className="products-grid">
+              {filteredProducts.slice(0, visibleCount).map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onClick={() => onProductClick(product)}
+                />
+              ))}
+            </div>
+
+            {visibleCount < filteredProducts.length && (
+              <div className="load-more-container">
+                <button className="load-more-btn" onClick={handleLoadMore}>
+                  Discover More Items
+                </button>
+                <p className="items-shown-text">
+                  Viewing {Math.min(visibleCount, filteredProducts.length)} of {filteredProducts.length} items
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

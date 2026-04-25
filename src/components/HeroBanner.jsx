@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 import { banners } from "../data/products";
 import "../styles/HeroBanner.css";
 
-function HeroBanner() {
+function HeroBanner({ onNavigate }) {
   const [activeSlide, setActiveSlide] = useState(0);
 
   // useEffect: Auto-play the slider every 3 seconds
@@ -35,17 +35,23 @@ function HeroBanner() {
           <span className="hero-tag">{currentBanner.tag}</span>
           <h1 className="hero-title">{currentBanner.title}</h1>
           <p className="hero-subtitle">{currentBanner.subtitle}</p>
-          <button className="hero-cta" id="hero-cta-btn">
+          <button 
+            className="hero-cta" 
+            id="hero-cta-btn"
+            onClick={() => onNavigate('men')}
+          >
             {currentBanner.cta} →
           </button>
         </div>
 
-        {/* Decorative */}
-        <div className="hero-art">
-          <div className="art-circle art-circle-1"></div>
-          <div className="art-circle art-circle-2"></div>
-          <div className="art-circle art-circle-3"></div>
-          <span className="art-logo">TSS</span>
+        {/* Featured product image */}
+        <div className="hero-image-wrap">
+          <img 
+            src={currentBanner.image} 
+            alt={currentBanner.title}
+            className="hero-featured-img"
+          />
+          <div className="hero-image-glow"></div>
         </div>
       </div>
 

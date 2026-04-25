@@ -6,20 +6,15 @@ import React, { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import "../styles/Navbar.css";
 
-function Navbar({ onCartOpen, onNavigate }) {
+function Navbar({ onCartOpen, onNavigate, activePage }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { totalItems, wishlist } = useContext(CartContext);
 
   // Navbar links — array of objects, rendered with .map
   const navLinks = [
-    { label: "Men",       href: "#" },
-    { label: "Women",     href: "#" },
-    { label: "Kids",      href: "#" },
-    { label: "Marvel",    href: "#" },
-    { label: "DC",        href: "#" },
-    { label: "Anime",     href: "#" },
-    { label: "Cricket",   href: "#" },
-    { label: "Sale 🔥",   href: "#" },
+    { label: "Men",       id: "men" },
+    { label: "Women",     id: "women" },
+    { label: "Sneakers",  id: "sneakers" },
   ];
 
   return (
@@ -88,9 +83,13 @@ function Navbar({ onCartOpen, onNavigate }) {
       {/* Category nav links — .map over array of objects */}
       <nav className={`navbar-links ${menuOpen ? "mobile-open" : ""}`}>
         {navLinks.map((link) => (
-          <a key={link.label} href={link.href} className="nav-link">
+          <button 
+            key={link.id} 
+            className={`nav-link-btn ${activePage === link.id ? "active-link" : ""}`}
+            onClick={() => onNavigate(link.id)}
+          >
             {link.label}
-          </a>
+          </button>
         ))}
       </nav>
     </header>

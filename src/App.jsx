@@ -10,6 +10,7 @@ import ProductGrid from "./components/ProductGrid";
 import CartDrawer from "./components/CartDrawer";
 import Footer from "./components/Footer";
 import WishlistPage from "./pages/WishlistPage";
+import SneakersPage from "./pages/SneakersPage";
 import ProductDetail from "./components/ProductDetail";
 import "./App.css";
 
@@ -38,6 +39,8 @@ function App() {
               onNavigate={setCurrentPage}
               onProductClick={setSelectedProduct}
             />
+          ) : currentPage === "sneakers" ? (
+            <SneakersPage onProductClick={setSelectedProduct} />
           ) : (
             <ProductGrid 
               key={currentPage} // Force re-mount on page change

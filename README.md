@@ -14,6 +14,8 @@ A React-based clone of [The Souled Store](https://www.thesouledstore.com/) — I
 
 ## 🎨 Features (Phase 1)
 
+- ✅ **Dynamic Store Navigation**: Updated store sections exclusively for Men, Women, and Sneakers.
+- ✅ **DummyJSON Integration**: Auto-generating products directly from the DummyJSON API ensuring unique, high-quality images.
 - ✅ Sticky navbar with announcement bar, search, and cart badge
 - ✅ Auto-sliding hero banner (3 slides, auto-play every 3s)
 - ✅ Trust badges row

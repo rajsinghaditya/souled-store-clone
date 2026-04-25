@@ -1,6 +1,3 @@
-// =====================================================
-// CATEGORIES - Array of objects
-// =====================================================
 export const categories = [
   { id: "all",       label: "All",          icon: "🛍️" },
   { id: "men",       label: "Men",          icon: "👕" },
@@ -8,9 +5,6 @@ export const categories = [
   { id: "sneakers",  label: "Sneakers",     icon: "👟" },
 ];
 
-// =====================================================
-// FANDOMS - Array of objects
-// =====================================================
 export const fandoms = [
   { id: "all",           label: "All Fandoms" },
   { id: "Marvel",        label: "Marvel" },
@@ -25,9 +19,6 @@ export const fandoms = [
   { id: "Stranger Things", label: "Stranger Things" },
 ];
 
-// =====================================================
-// SORT OPTIONS - Array of objects
-// =====================================================
 export const sortOptions = [
   { id: "default",      label: "Featured" },
   { id: "price-low",   label: "Price: Low to High" },
@@ -36,9 +27,6 @@ export const sortOptions = [
   { id: "newest",      label: "New Arrivals" },
 ];
 
-// =====================================================
-// BANNER DATA - Array of objects
-// =====================================================
 export const banners = [
   {
     id: 1,

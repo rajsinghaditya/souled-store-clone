@@ -1,16 +1,13 @@
-// =====================================================
-// Navbar.jsx
-// Concepts: useState (for mobile menu & cart open state)
-// =====================================================
 import React, { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import "../styles/Navbar.css";
+import soulStoreLogo from "../assets/logo for soul store .webp";
 
 function Navbar({ onCartOpen, onNavigate, activePage }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { totalItems, wishlist } = useContext(CartContext);
 
-  // Navbar links — array of objects, rendered with .map
+  
   const navLinks = [
     { label: "Men",       id: "men" },
     { label: "Women",     id: "women" },
@@ -19,22 +16,31 @@ function Navbar({ onCartOpen, onNavigate, activePage }) {
 
   return (
     <header className="navbar">
-      {/* Top bar */}
+      
       <div className="navbar-top">
         <p className="navbar-announcement">
           🎉 FREE SHIPPING on orders above ₹999 | Use code: <strong>SOULED10</strong> for 10% off
         </p>
       </div>
 
-      {/* Main navbar */}
+      
       <nav className="navbar-main">
-        {/* Logo */}
-        <div className="navbar-logo" onClick={() => onNavigate('home')} style={{cursor: 'pointer'}}>
-          <span className="logo-icon">S</span>
-          <span className="logo-text">The Souled Store</span>
+        
+        <div className="navbar-logo" onClick={() => onNavigate('home')} style={{cursor: 'pointer', display: 'flex', alignItems: 'center'}}>
+          <img 
+            src={soulStoreLogo} 
+            alt="The Souled Store Logo" 
+            style={{ 
+              height: '48px', 
+              objectFit: 'contain',
+              background: '#fff',
+              borderRadius: '6px',
+              padding: '4px 8px'
+            }} 
+          />
         </div>
 
-        {/* Search bar */}
+        
         <div className="navbar-search">
           <span className="search-icon">🔍</span>
           <input
@@ -45,7 +51,7 @@ function Navbar({ onCartOpen, onNavigate, activePage }) {
           />
         </div>
 
-        {/* Right actions */}
+        
         <div className="navbar-actions">
           <button className="action-btn" id="wishlist-btn" title="Wishlist" onClick={() => onNavigate('wishlist')}>
             <span>🤍</span>
@@ -80,7 +86,7 @@ function Navbar({ onCartOpen, onNavigate, activePage }) {
         </div>
       </nav>
 
-      {/* Category nav links — .map over array of objects */}
+      
       <nav className={`navbar-links ${menuOpen ? "mobile-open" : ""}`}>
         {navLinks.map((link) => (
           <button 

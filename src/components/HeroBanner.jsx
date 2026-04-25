@@ -1,7 +1,3 @@
-// =====================================================
-// HeroBanner.jsx
-// Concepts: useState (activeSlide), useEffect (auto-play)
-// =====================================================
 import React, { useState, useEffect } from "react";
 import { banners } from "../data/products";
 import "../styles/HeroBanner.css";
@@ -9,18 +5,18 @@ import "../styles/HeroBanner.css";
 function HeroBanner({ onNavigate }) {
   const [activeSlide, setActiveSlide] = useState(0);
 
-  // useEffect: Auto-play the slider every 3 seconds
+  
   useEffect(() => {
     const timer = setInterval(() => {
-      // Update slide using functional update (prev state pattern)
+      
       setActiveSlide((prev) => (prev + 1) % banners.length);
     }, 3000);
 
-    // Cleanup on unmount
+    
     return () => clearInterval(timer);
-  }, []); // Empty dependency array = runs once on mount
+  }, []); 
 
-  // Get active banner object from array
+  
   const currentBanner = banners[activeSlide];
 
   return (
@@ -30,7 +26,7 @@ function HeroBanner({ onNavigate }) {
         style={{ background: currentBanner.bg }}
         id="hero-banner"
       >
-        {/* Text content */}
+        
         <div className="hero-content">
           <span className="hero-tag">{currentBanner.tag}</span>
           <h1 className="hero-title">{currentBanner.title}</h1>
@@ -44,7 +40,7 @@ function HeroBanner({ onNavigate }) {
           </button>
         </div>
 
-        {/* Featured product image */}
+        
         <div className="hero-image-wrap">
           <img 
             src={currentBanner.image} 
@@ -55,7 +51,7 @@ function HeroBanner({ onNavigate }) {
         </div>
       </div>
 
-      {/* Dot indicators — .map over banners array */}
+      
       <div className="hero-dots">
         {banners.map((_, index) => (
           <button
@@ -67,7 +63,7 @@ function HeroBanner({ onNavigate }) {
         ))}
       </div>
 
-      {/* Trust badges */}
+      
       <div className="trust-badges">
         {[
           { icon: "✅", text: "100% Officially Licensed" },

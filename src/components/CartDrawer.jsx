@@ -1,7 +1,3 @@
-// =====================================================
-// CartDrawer.jsx
-// Concepts: useContext (cart state), .map over cartItems array
-// =====================================================
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import "../styles/CartDrawer.css";
@@ -16,16 +12,16 @@ function CartDrawer({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Overlay */}
+      
       <div
         className={`cart-overlay ${isOpen ? "overlay-visible" : ""}`}
         onClick={onClose}
         id="cart-overlay"
       />
 
-      {/* Drawer */}
+      
       <aside className={`cart-drawer ${isOpen ? "drawer-open" : ""}`} id="cart-drawer">
-        {/* Header */}
+        
         <div className="cart-header">
           <h2 className="cart-title">🛒 Your Cart</h2>
           <button className="cart-close-btn" id="cart-close-btn" onClick={onClose}>
@@ -33,7 +29,7 @@ function CartDrawer({ isOpen, onClose }) {
           </button>
         </div>
 
-        {/* Empty state */}
+        
         {cartItems.length === 0 ? (
           <div className="cart-empty">
             <p className="cart-empty-emoji">🛍️</p>
@@ -45,7 +41,7 @@ function CartDrawer({ isOpen, onClose }) {
           </div>
         ) : (
           <>
-            {/* Delivery progress bar */}
+            
             {totalPrice < DELIVERY_THRESHOLD && (
               <div className="delivery-bar">
                 <p className="delivery-text">
@@ -69,7 +65,7 @@ function CartDrawer({ isOpen, onClose }) {
               </div>
             )}
 
-            {/* Cart items list — .map over cartItems array of objects */}
+            
             <div className="cart-items-list">
               {cartItems.map((item) => {
                 const itemKey = `${item.id}-${item.selectedSize}`;
@@ -87,7 +83,7 @@ function CartDrawer({ isOpen, onClose }) {
                       </p>
                       <p className="cart-item-price">₹{item.price}</p>
 
-                      {/* Quantity controls */}
+                      
                       <div className="qty-controls">
                         <button
                           className="qty-btn"
@@ -111,7 +107,7 @@ function CartDrawer({ isOpen, onClose }) {
                       </div>
                     </div>
 
-                    {/* Remove */}
+                    
                     <button
                       className="remove-btn"
                       id={`remove-${itemKey}`}
@@ -127,7 +123,7 @@ function CartDrawer({ isOpen, onClose }) {
               })}
             </div>
 
-            {/* Cart summary */}
+            
             <div className="cart-summary">
               <div className="summary-row">
                 <span>Subtotal</span>

@@ -1,20 +1,14 @@
-// =====================================================
-// ProductGrid.jsx
-// Concepts: useState (filters, sort, search), useEffect (filtered products)
-//           .filter, .sort, .map on arrays of objects
-//           Pagination (visibleCount)
-// =====================================================
 import React, { useState, useEffect } from "react";
 import { categories, fandoms, sortOptions } from "../data/products";
 import ProductCard from "./ProductCard";
 import "../styles/ProductGrid.css";
 
 function ProductGrid({ onProductClick, categoryFilter }) {
-  // State variables
+  
   const [products, setProducts]             = useState([]);
   const [loading, setLoading]               = useState(true);
   
-  // Initialize filters
+  
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedFandom, setSelectedFandom]     = useState(() => {
     if (categoryFilter === "marvel") return "Marvel";
@@ -33,10 +27,10 @@ function ProductGrid({ onProductClick, categoryFilter }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [showInStockOnly, setShowInStockOnly]   = useState(false);
   
-  // Pagination State
+  
   const [visibleCount, setVisibleCount]         = useState(24);
 
-  // Fetch products on mount
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -54,7 +48,7 @@ function ProductGrid({ onProductClick, categoryFilter }) {
     fetchProducts();
   }, []);
 
-  // Filter & Sort logic
+  
   useEffect(() => {
     if (products.length === 0) return;
 
@@ -80,7 +74,7 @@ function ProductGrid({ onProductClick, categoryFilter }) {
     });
 
     setFilteredProducts(result);
-    // Reset visible count when filters change to show top results
+    
     setVisibleCount(24);
   }, [products, selectedCategory, selectedFandom, selectedGender, selectedSort, searchQuery, showInStockOnly]);
 
@@ -109,7 +103,7 @@ function ProductGrid({ onProductClick, categoryFilter }) {
           <span className="product-count">{filteredProducts.length} unique items</span>
         </div>
 
-        {/* ===== FILTERS BAR ===== */}
+        
         <div className="filters-bar">
           <div className="filter-search">
             <span>🔍</span>
@@ -166,7 +160,7 @@ function ProductGrid({ onProductClick, categoryFilter }) {
           <button className="reset-btn" onClick={resetFilters}>Reset</button>
         </div>
 
-        {/* ===== GRID ===== */}
+        
         {loading ? (
           <div className="loading-container"><div className="loading-spinner"></div></div>
         ) : filteredProducts.length === 0 ? (

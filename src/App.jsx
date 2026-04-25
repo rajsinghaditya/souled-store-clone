@@ -1,7 +1,3 @@
-// =====================================================
-// App.jsx — Root Component
-// Concepts: useState (cart open/close), CartProvider context
-// =====================================================
 import React, { useState } from "react";
 import { CartProvider } from "./context/CartContext";
 import Navbar from "./components/Navbar";
@@ -15,16 +11,16 @@ import ProductDetail from "./components/ProductDetail";
 import "./App.css";
 
 function App() {
-  // State: current page or category
+  
   const [cartOpen, setCartOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState("home"); // home, wishlist, men, women, sneakers
+  const [currentPage, setCurrentPage] = useState("home"); 
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // Helper to determine if we are on a category page
+  
   const isCategoryPage = ["men", "women", "sneakers"].includes(currentPage);
 
   return (
-    // Wrap entire app with CartProvider so all components can access cart
+    
     <CartProvider>
       <div className="app">
         <Navbar onCartOpen={() => setCartOpen(true)} onNavigate={setCurrentPage} activePage={currentPage} />
@@ -43,7 +39,7 @@ function App() {
             <SneakersPage onProductClick={setSelectedProduct} />
           ) : (
             <ProductGrid 
-              key={currentPage} // Force re-mount on page change
+              key={currentPage} 
               categoryFilter={currentPage} 
               onProductClick={setSelectedProduct} 
             />

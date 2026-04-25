@@ -1,16 +1,9 @@
-// =====================================================
-// CartContext.jsx
-// Concepts: React Context, useState
-// Manages cart state globally across the app
-// =====================================================
 import React, { useState, createContext } from "react";
 
-// Create the context
 export const CartContext = createContext();
 
-// CartProvider wraps the whole app so any component can access cart
 export function CartProvider({ children }) {
-  // cartItems is an Array of objects: { ...product, selectedSize, quantity }
+  
   const [cartItems, setCartItems] = useState(() => {
     const savedCart = localStorage.getItem("cartItems");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -20,7 +13,7 @@ export function CartProvider({ children }) {
     return savedWishlist ? JSON.parse(savedWishlist) : [];
   });
 
-  // Sync with localStorage
+  
   React.useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -29,7 +22,7 @@ export function CartProvider({ children }) {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
 
-  // TOGGLE WISHLIST
+  
   function toggleWishlist(product) {
     setWishlist(prev =>
       prev.find(p => p.id === product.id)
@@ -38,11 +31,11 @@ export function CartProvider({ children }) {
     );
   }
 
-  // CHECK IF WISHLISTED
+  
   const isWishlisted = (id) => wishlist.some(p => p.id === id);
 
-  // ADD ITEM TO CART
-  // Uses .findIndex (array method) to check if item already exists
+  
+  
   function addToCart(product, selectedSize) {
     setCartItems((prevItems) => {
       const existingIndex = prevItems.findIndex(
@@ -50,21 +43,21 @@ export function CartProvider({ children }) {
       );
 
       if (existingIndex !== -1) {
-        // Item exists — increase quantity using .map
+        
         return prevItems.map((item, index) =>
           index === existingIndex
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        // New item — spread existing array and add new object
+        
         return [...prevItems, { ...product, selectedSize, quantity: 1 }];
       }
     });
   }
 
-  // REMOVE ITEM FROM CART
-  // Uses .filter to remove the matching item
+  
+  
   function removeFromCart(productId, selectedSize) {
     setCartItems((prevItems) =>
       prevItems.filter(
@@ -73,7 +66,7 @@ export function CartProvider({ children }) {
     );
   }
 
-  // UPDATE QUANTITY
+  
   function updateQuantity(productId, selectedSize, delta) {
     setCartItems((prevItems) =>
       prevItems
@@ -83,19 +76,19 @@ export function CartProvider({ children }) {
           }
           return item;
         })
-        .filter((item) => item.quantity > 0) // Remove if quantity hits 0
+        .filter((item) => item.quantity > 0) 
     );
   }
 
-  // CLEAR CART
+  
   function clearCart() {
     setCartItems([]);
   }
 
-  // TOTAL ITEMS COUNT — uses .reduce (array method)
+  
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  // TOTAL PRICE — uses .reduce
+  
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0

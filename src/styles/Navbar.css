@@ -1,5 +1,3 @@
-/* Navbar.css */
-
 .navbar {
   position: fixed;
   top: 0;
@@ -12,7 +10,6 @@
   box-shadow: var(--shadow-md);
 }
 
-/* Top announcement bar */
 .navbar-top {
   background: var(--color-primary);
   text-align: center;
@@ -25,7 +22,6 @@
   color: #fff;
 }
 
-/* Main nav row */
 .navbar-main {
   display: flex;
   align-items: center;
@@ -34,7 +30,6 @@
   padding: 12px 24px;
 }
 
-/* Logo */
 .navbar-logo {
   display: flex;
   align-items: center;
@@ -61,7 +56,6 @@
   letter-spacing: -0.5px;
 }
 
-/* Search */
 .navbar-search {
   flex: 1;
   max-width: 500px;
@@ -91,7 +85,6 @@
   color: var(--color-text-faint);
 }
 
-/* Actions */
 .navbar-actions {
   display: flex;
   align-items: center;
@@ -144,7 +137,6 @@
   place-items: center;
 }
 
-/* Hamburger */
 .hamburger-btn {
   display: none;
   background: transparent;
@@ -153,7 +145,6 @@
   padding: 4px 8px;
 }
 
-/* Category links */
 .navbar-links {
   display: flex;
   align-items: center;
@@ -185,7 +176,6 @@
   box-shadow: var(--shadow-glow);
 }
 
-/* Mobile */
 @media (max-width: 768px) {
   .navbar-search { display: none; }
   .action-label  { display: none; }

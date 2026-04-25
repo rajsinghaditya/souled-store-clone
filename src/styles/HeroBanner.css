@@ -1,5 +1,3 @@
-/* HeroBanner.css */
-
 .hero-section {
   padding: 0;
 }
@@ -69,7 +67,6 @@
   box-shadow: var(--shadow-md);
 }
 
-/* Decorative art */
 .hero-art {
   position: absolute;
   right: 80px;
@@ -104,7 +101,6 @@
   letter-spacing: -4px;
 }
 
-/* Dots */
 .hero-dots {
   display: flex;
   justify-content: center;
@@ -126,7 +122,6 @@
   border-radius: var(--radius-full);
 }
 
-/* Trust badges */
 .trust-badges {
   display: flex;
   justify-content: center;

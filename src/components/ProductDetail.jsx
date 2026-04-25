@@ -1,7 +1,3 @@
-// =====================================================
-// ProductDetail.jsx
-// Concepts: useState (selected size), useEffect (lock body scroll)
-// =====================================================
 import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import "../styles/ProductDetail.css";
@@ -11,7 +7,7 @@ function ProductDetail({ product, isOpen, onClose }) {
   const [selectedSize, setSelectedSize] = useState("");
   const [allProducts, setAllProducts] = useState([]);
 
-  // Fetch all products to find related ones
+  
   useEffect(() => {
     if (isOpen) {
       fetch("/products.json")
@@ -21,7 +17,7 @@ function ProductDetail({ product, isOpen, onClose }) {
     }
   }, [isOpen]);
 
-  // Lock scroll when modal is open
+  
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -33,7 +29,7 @@ function ProductDetail({ product, isOpen, onClose }) {
 
   if (!product) return null;
 
-  // Filter related products (same category, different ID)
+  
   const related = allProducts
     .filter(p => p.category === product.category && p.id !== product.id)
     .slice(0, 3);
@@ -114,7 +110,7 @@ function ProductDetail({ product, isOpen, onClose }) {
             <div className="perk">↩️ 30 days easy returns</div>
           </div>
 
-          {/* Related Products — Concepts: filter, map */}
+          
           {related.length > 0 && (
             <div className="related-products-section">
               <h3 className="related-title">You Might Also Like</h3>

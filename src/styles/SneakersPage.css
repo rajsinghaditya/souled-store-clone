@@ -1,7 +1,3 @@
-/* =========================================
-   SneakersPage.css
-   ========================================= */
-
 .sneakers-page {
   background-color: #f7f7f7;
   min-height: 100vh;
@@ -11,7 +7,7 @@
 .sneakers-hero {
   position: relative;
   height: 400px;
-  background-image: url('https://cdn.dummyjson.com/product-images/mens-shoes/nike-air-jordan-1-red-and-black/1.webp'); /* Fallback image */
+  background-image: url('https://cdn.dummyjson.com/product-images/mens-shoes/nike-air-jordan-1-red-and-black/1.webp'); 
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -136,7 +132,6 @@
   letter-spacing: 1px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .sneakers-hero-content h1 {
     font-size: 2.5rem;

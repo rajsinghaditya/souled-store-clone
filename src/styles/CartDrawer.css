@@ -1,6 +1,3 @@
-/* CartDrawer.css */
-
-/* Overlay */
 .cart-overlay {
   position: fixed;
   inset: 0;
@@ -15,7 +12,6 @@
   backdrop-filter: blur(4px);
 }
 
-/* Drawer */
 .cart-drawer {
   position: fixed;
   top: 0;
@@ -36,7 +32,6 @@
   transform: translateX(0);
 }
 
-/* Header */
 .cart-header {
   display: flex;
   align-items: center;
@@ -68,7 +63,6 @@
   border-color: var(--color-primary);
 }
 
-/* Empty */
 .cart-empty {
   flex: 1;
   display: flex;
@@ -101,7 +95,6 @@
   transform: translateY(-2px);
 }
 
-/* Delivery bar */
 .delivery-bar {
   padding: 12px 20px;
   background: var(--color-surface-2);
@@ -131,7 +124,6 @@
   transition: width 0.5s ease;
 }
 
-/* Items list */
 .cart-items-list {
   flex: 1;
   overflow-y: auto;
@@ -184,7 +176,6 @@
   color: var(--color-primary);
 }
 
-/* Quantity controls */
 .qty-controls {
   display: flex;
   align-items: center;
@@ -215,7 +206,6 @@
   text-align: center;
 }
 
-/* Remove button */
 .remove-btn {
   background: transparent;
   font-size: 18px;
@@ -228,7 +218,6 @@
   transform: scale(1.2);
 }
 
-/* Summary */
 .cart-summary {
   padding: 20px;
   border-top: 1px solid var(--color-border);

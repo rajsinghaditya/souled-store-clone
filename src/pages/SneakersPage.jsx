@@ -9,14 +9,14 @@ function SneakersPage({ onProductClick }) {
   const [sortOrder, setSortOrder] = useState("default");
   
   useEffect(() => {
-    // 1. Use fetch
+    
     fetch("/products.json")
       .then(res => res.json())
       .then(data => {
-        // 2. Use filter to get only sneakers
+        
         const sneakerData = data.filter(item => item.category === "sneakers");
         
-        // 3. Use forEach (assigning a discount tag dynamically based on price)
+        
         sneakerData.forEach(sneaker => {
           if (sneaker.originalPrice && sneaker.price < sneaker.originalPrice) {
             const discount = Math.round(((sneaker.originalPrice - sneaker.price) / sneaker.originalPrice) * 100);
@@ -37,7 +37,7 @@ function SneakersPage({ onProductClick }) {
   }, []);
 
   useEffect(() => {
-    // 4. Use sort
+    
     let result = [...sneakers];
     if (sortOrder === "price-low") {
       result.sort((a, b) => a.price - b.price);
@@ -49,7 +49,7 @@ function SneakersPage({ onProductClick }) {
 
   return (
     <div className="sneakers-page">
-      {/* Sneaker Hero Banner simulating The Souled Store's style */}
+      
       <div className="sneakers-hero">
         <div className="sneakers-hero-overlay"></div>
         <div className="sneakers-hero-content">
@@ -75,7 +75,7 @@ function SneakersPage({ onProductClick }) {
           <div className="loading-container"><div className="loading-spinner"></div></div>
         ) : (
           <div className="sneakers-grid">
-            {/* 5. Use map */}
+            
             {filteredSneakers.map(sneaker => (
               <div className="sneaker-card-wrapper" key={sneaker.id}>
                 <ProductCard 

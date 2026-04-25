@@ -1,12 +1,8 @@
-// =====================================================
-// Footer.jsx
-// Concepts: .map over arrays of objects for links
-// =====================================================
 import React from "react";
 import "../styles/Footer.css";
 
 function Footer() {
-  // Array of objects — rendered with .map
+  
   const footerLinks = [
     {
       title: "Company",
@@ -46,7 +42,7 @@ function Footer() {
   return (
     <footer className="footer" id="footer">
       <div className="footer-container">
-        {/* Brand */}
+        
         <div className="footer-brand">
           <div className="footer-logo">
             <span className="logo-icon-sm">S</span>
@@ -65,7 +61,7 @@ function Footer() {
             </form>
           </div>
 
-          {/* Social — .map over socialLinks */}
+          
           <div className="footer-social">
             {socialLinks.map((s) => (
               <a key={s.label} href="#" className="social-link" title={s.label}>
@@ -75,7 +71,7 @@ function Footer() {
           </div>
         </div>
 
-        {/* Links — .map over footerLinks array of objects */}
+        
         {footerLinks.map((section) => (
           <div key={section.title} className="footer-section">
             <h4 className="footer-section-title">{section.title}</h4>
@@ -92,7 +88,7 @@ function Footer() {
         ))}
       </div>
 
-      {/* Bottom bar */}
+      
       <div className="footer-bottom">
         <p>© 2024 The Souled Store. All rights reserved.</p>
         <div className="footer-payments">
